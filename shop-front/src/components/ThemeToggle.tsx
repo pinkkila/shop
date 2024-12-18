@@ -7,13 +7,13 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {useTheme} from "@/hooks/use-theme";
+import {useTheme} from "@/lib/hooks.ts";
 
-export function ModeToggle() {
+export function ThemeToggle() {
     const {setTheme} = useTheme();
 
     return (
-        <div className="mx-4">
+        <div className="m-4">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="icon">

@@ -1,12 +1,15 @@
 import {Button} from "@/components/ui/button.tsx";
-import {ModeToggle} from "@/components/ModeToggle.tsx";
+import {ThemeToggle} from "@/components/ThemeToggle.tsx";
+import ThemeContextProvider from "@/contexts/ThemeContextProvider.tsx";
 
 function App() {
 
     return (
         <>
-            <Button>button</Button>
-            <ModeToggle />
+            <ThemeContextProvider>
+                <Button>button</Button>
+                <ThemeToggle/>
+            </ThemeContextProvider>
         </>
     )
 }
