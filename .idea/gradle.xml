@@ -9,6 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/backend" />
+            <option value="$PROJECT_DIR$/backend/authorization-server" />
+            <option value="$PROJECT_DIR$/backend/gateway" />
+            <option value="$PROJECT_DIR$/backend/resource-server" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -18,6 +21,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/backend/authorization-server" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend/gateway" />
+        <option name="gradleJvm" value="21" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/backend/gateway" />
           </set>
         </option>
       </GradleProjectSettings>
