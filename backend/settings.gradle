@@ -1,2 +1,5 @@
 rootProject.name = 'backend'
 
+include('authorization-server')
+include('gateway')
+include('resource-server')
