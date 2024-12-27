@@ -13,9 +13,3 @@ spring:
   sql:
     init:
       mode: always
-
-  docker:
-    compose:
-      skip:
-        in-tests: false
-      file: "./../../compose.yaml"
