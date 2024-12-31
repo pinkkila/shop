@@ -1,4 +1,4 @@
-package fi.pink.resourceserver.domain;
+package fi.pink.resourceserver.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

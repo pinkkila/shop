@@ -6,6 +6,4 @@ create table if not exists product
     product_name text not null
 );
 
-insert into product (id, product_name)
-values (1, 'tuote1'),
-       (2, 'tuote2');
+
