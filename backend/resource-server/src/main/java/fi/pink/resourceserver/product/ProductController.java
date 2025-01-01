@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/shop/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductRepository productRepository;

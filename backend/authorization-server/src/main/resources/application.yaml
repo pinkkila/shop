@@ -6,7 +6,7 @@ spring:
     name: "authorization-server"
 
   config:
-    import: "optional:classpaht:./../../secrets.properties"
+    import: "optional:classpaht:./../../../../../secrets.properties"
 
   security:
     oauth2:
@@ -23,7 +23,7 @@ spring:
               redirect-uris:
                 - ${REDIRECT_URIS:http://127.0.0.1:8080/login/oauth2/code/spring}
               post-logout-redirect-uris:
-                - ${REDIRECT_URIS:http://127.0.0.1:8080/store/}
+                - ${REDIRECT_URIS:http://127.0.0.1:8080/shop}
               scopes:
                 - "openid"
             require-authorization-consent: true
@@ -38,4 +38,4 @@ spring:
 
 logging:
   level:
-    org.springframework.security: tracespring.application.name=authorization-server
+    org.springframework.security: trace
