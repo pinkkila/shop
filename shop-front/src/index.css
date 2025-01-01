@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ... */
-
 @layer base {
   :root {
 
@@ -112,6 +110,10 @@
 @layer base {
   * {
     @apply border-border;
+
+    /* This can be used to see where the element-boxes are. */
+    outline: 1px solid lime;
+
   }
   body {
     @apply bg-background text-foreground;
