@@ -23,7 +23,7 @@ spring:
               redirect-uris:
                 - ${REDIRECT_URIS:http://127.0.0.1:8080/login/oauth2/code/spring}
               post-logout-redirect-uris:
-                - ${REDIRECT_URIS:http://127.0.0.1:8080/shop}
+                - ${REDIRECT_URIS:http://127.0.0.1:8080/shop/}
               scopes:
                 - "openid"
             require-authorization-consent: true
