@@ -6,7 +6,7 @@ spring:
     name: "resource-server"
 
   config:
-    import: "optional:classpaht:./../../../../../secrets.properties"
+    import: "classpaht:./../../secrets.properties"
 
   datasource:
     username: myuser
