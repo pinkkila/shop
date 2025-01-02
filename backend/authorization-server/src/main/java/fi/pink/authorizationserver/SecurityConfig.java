@@ -37,7 +37,7 @@ public class SecurityConfig {
             // from the authorization endpoint
             .exceptionHandling((exceptions) -> exceptions
                 .defaultAuthenticationEntryPointFor(
-                    new LoginUrlAuthenticationEntryPoint("/oauth2/authorization/google"),
+                    new LoginUrlAuthenticationEntryPoint("/login"),
                     new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                 )
             );
