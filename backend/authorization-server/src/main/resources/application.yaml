@@ -6,7 +6,7 @@ spring:
     name: "authorization-server"
 
   config:
-    import: "classpaht:./../../secrets.properties"
+    import: "optional:classpaht:./../../secrets.properties"
 
   security:
     oauth2:

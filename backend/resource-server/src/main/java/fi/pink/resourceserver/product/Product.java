@@ -12,4 +12,5 @@ public class Product {
     @Id
     private Long id;
     private String productName;
+    private int stockQty;
 }

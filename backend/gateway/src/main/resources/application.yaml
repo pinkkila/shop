@@ -3,7 +3,7 @@ spring:
     name: "gateway"
 
   config:
-    import: "classpaht:./../../secrets.properties"
+    import: "optional:classpaht:./../../secrets.properties"
 
   session:
     redis:
