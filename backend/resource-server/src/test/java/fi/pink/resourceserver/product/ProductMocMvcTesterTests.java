@@ -23,4 +23,13 @@ public class ProductMocMvcTesterTests {
             .hasStatus(HttpStatus.OK);
 //            .bodyJson()
     }
+
+    @Test
+    void shouldNotFound() {
+        tester.get()
+            .uri("/shop/products/999")
+            .exchange()
+            .assertThat()
+            .hasStatus(HttpStatus.NOT_FOUND);
+    }
 }
