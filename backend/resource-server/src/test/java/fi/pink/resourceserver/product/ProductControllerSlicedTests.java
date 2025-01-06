@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.mockito.Mockito.when;
 
@@ -37,8 +39,29 @@ public class ProductControllerSlicedTests {
             .uri("/shop/products/99")
             .exchange()
             .assertThat()
-            .hasStatus(HttpStatus.OK);
-//            .bodyJson()
+            .hasStatus(HttpStatus.OK)
+            .bodyJson()
+            .extractingPath("$.productName")
+            .asString()
+            .isEqualTo("tuote1");
+//            .extractingPath("$.id")
+//            .asNumber()
+//            .isEqualTo(99);
+    }
+
+    @Test
+    void basicWithDifferentAssertionSyntaxAndRedundatnRequest() {
+        assertThat(mockMvc.get().uri("/shop/products/99")).hasStatusOk();
+        assertThat(mockMvc.get().uri("/shop/products/99")).bodyJson().extractingPath("$.productName").isEqualTo("tuote1");
+        assertThat(mockMvc.get().uri("/shop/products/99")).bodyJson().extractingPath("$.id").isEqualTo(99);
+    }
+
+    @Test
+    void basicWithDifferentSyntaxButWithoutRedundantRequest() {
+        MvcTestResult result = mockMvc.get().uri("/shop/products/99").exchange();
+
+        assertThat(result).hasStatus(HttpStatus.OK);
+        assertThat(result).bodyJson().extractingPath("$.productName").isEqualTo("tuote1");
     }
 
     @Test
@@ -68,4 +91,5 @@ public class ProductControllerSlicedTests {
             .assertThat()
             .hasStatus(HttpStatus.UNAUTHORIZED);
     }
+
 }
