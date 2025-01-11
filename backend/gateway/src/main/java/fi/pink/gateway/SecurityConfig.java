@@ -23,13 +23,13 @@ import reactor.core.publisher.Mono;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
-
+    
     private final ReactiveClientRegistrationRepository clientRegistrationRepository;
-
+    
     public SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository) {
         this.clientRegistrationRepository = clientRegistrationRepository;
     }
-
+    
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean
     SecurityWebFilterChain storeWebFilterChain(ServerHttpSecurity http) {
@@ -37,30 +37,30 @@ public class SecurityConfig {
         XorServerCsrfTokenRequestAttributeHandler delegate = new XorServerCsrfTokenRequestAttributeHandler();
         ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
         return http
-            .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shop/**"))
-            .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
-            .csrf((csrf) -> csrf
-                .csrfTokenRepository(tokenRepository)
-                .csrfTokenRequestHandler(requestHandler)
-            )
-            .build();
+                .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shop/**"))
+                .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
+                .csrf((csrf) -> csrf
+                        .csrfTokenRepository(tokenRepository)
+                        .csrfTokenRequestHandler(requestHandler)
+                )
+                .build();
     }
-
+    
     @Bean
     SecurityWebFilterChain storeapiWebFilterChain(ServerHttpSecurity http) {
         CookieServerCsrfTokenRepository tokenRepository = CookieServerCsrfTokenRepository.withHttpOnlyFalse();
         XorServerCsrfTokenRequestAttributeHandler delegate = new XorServerCsrfTokenRequestAttributeHandler();
         ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
         return http
-            .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shopapi/**"))
-            .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
-            .csrf((csrf) -> csrf
-                .csrfTokenRepository(tokenRepository)
-                .csrfTokenRequestHandler(requestHandler)
-            )
-            .build();
+                .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shopapi/**"))
+                .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
+                .csrf((csrf) -> csrf
+                        .csrfTokenRepository(tokenRepository)
+                        .csrfTokenRequestHandler(requestHandler)
+                )
+                .build();
     }
-
+    
     @Bean
     SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         DefaultServerOAuth2AuthorizationRequestResolver pkceResolver = new DefaultServerOAuth2AuthorizationRequestResolver(this.clientRegistrationRepository);
@@ -71,22 +71,22 @@ public class SecurityConfig {
         // default implementation of resolveCsrfTokenValue() from ServerCsrfTokenRequestHandler
         ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
         return http
-            .authorizeExchange((authorize) -> authorize
-                .anyExchange().authenticated())
-            .csrf((csrf) -> csrf
-                .csrfTokenRepository(tokenRepository)
-                .csrfTokenRequestHandler(requestHandler)
-            )
-            .oauth2Login(login -> login
-                .authorizationRequestResolver(pkceResolver)
-            )
-            .oauth2Client(Customizer.withDefaults())
-            .logout((logout) -> logout
-                .logoutSuccessHandler(oidcLogoutSuccessHandler())
-            )
-            .build();
+                .authorizeExchange((authorize) -> authorize
+                        .anyExchange().authenticated())
+                .csrf((csrf) -> csrf
+                        .csrfTokenRepository(tokenRepository)
+                        .csrfTokenRequestHandler(requestHandler)
+                )
+                .oauth2Login(login -> login
+                        .authorizationRequestResolver(pkceResolver)
+                )
+                .oauth2Client(Customizer.withDefaults())
+                .logout((logout) -> logout
+                        .logoutSuccessHandler(oidcLogoutSuccessHandler())
+                )
+                .build();
     }
-
+    
     @Bean
     WebFilter csrfCookieWebFilter() {
         return (exchange, chain) -> {
@@ -108,17 +108,17 @@ public class SecurityConfig {
 //
 //        return oidcLogoutSuccessHandler;
 //    }
-
+    
     private ServerLogoutSuccessHandler oidcLogoutSuccessHandler() {
         CustomLogoutSuccessHandler oidcLogoutSuccessHandler =
-            new CustomLogoutSuccessHandler(this.clientRegistrationRepository);
-
+                new CustomLogoutSuccessHandler(this.clientRegistrationRepository);
+        
         // Sets the location that the End-User's User Agent will be redirected to
         // after the logout has been performed at the Provider
         oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}");
-
+        
         return oidcLogoutSuccessHandler;
     }
-
-
+    
+    
 }
