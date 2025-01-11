@@ -1,16 +1,15 @@
-import ThemeContextProvider from "@/contexts/ThemeContextProvider.tsx";
-import {ThemeToggle} from "@/components/ThemeToggle.tsx";
-import LogoutBtn from "@/components/LogoutBtn.tsx";
+import Header from "@/components/Header.tsx";
+import Container from "@/components/Container.tsx";
+import Footer from "@/components/Footer.tsx";
 
 function App() {
 
   return (
-    <>
-      <ThemeContextProvider>
-        <ThemeToggle/>
-        <LogoutBtn/>
-      </ThemeContextProvider>
-    </>
+    <div className="flex flex-col min-h-screen">
+      <Header/>
+      <Container/>
+      <Footer/>
+    </div>
   )
 }
 

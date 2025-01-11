@@ -13,17 +13,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+    
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .authorizeHttpRequests((authorizeHttpRequests) -> {
-                authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/shop/products/**").permitAll();
-                authorizeHttpRequests.anyRequest().authenticated();
-            })
-            .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
-            .csrf(AbstractHttpConfigurer::disable)
-            .build();
+                .authorizeHttpRequests((authorizeHttpRequests) -> {
+                    authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/shop/products/**").permitAll();
+                    authorizeHttpRequests.anyRequest().authenticated();
+                })
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .build();
     }
 }
 

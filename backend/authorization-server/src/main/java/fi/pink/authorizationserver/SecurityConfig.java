@@ -15,49 +15,49 @@ import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+    
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http)
-        throws Exception {
+            throws Exception {
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
-            OAuth2AuthorizationServerConfigurer.authorizationServer();
-
+                OAuth2AuthorizationServerConfigurer.authorizationServer();
+        
         http
-            .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-            .with(authorizationServerConfigurer, (authorizationServer) ->
-                authorizationServer
-                    .oidc(Customizer.withDefaults())	// Enable OpenID Connect 1.0
-            )
-            .authorizeHttpRequests((authorize) ->
-                authorize
-                    .anyRequest().authenticated()
-            )
-            // Redirect to the OAuth 2.0 Login endpoint when not authenticated
-            // from the authorization endpoint
-            .exceptionHandling((exceptions) -> exceptions
-                .defaultAuthenticationEntryPointFor(
-                    new LoginUrlAuthenticationEntryPoint("/login"),
-                    new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
+                .with(authorizationServerConfigurer, (authorizationServer) ->
+                        authorizationServer
+                                .oidc(Customizer.withDefaults())    // Enable OpenID Connect 1.0
                 )
-            );
-
+                .authorizeHttpRequests((authorize) ->
+                        authorize
+                                .anyRequest().authenticated()
+                )
+                // Redirect to the OAuth 2.0 Login endpoint when not authenticated
+                // from the authorization endpoint
+                .exceptionHandling((exceptions) -> exceptions
+                        .defaultAuthenticationEntryPointFor(
+                                new LoginUrlAuthenticationEntryPoint("/login"),
+                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                        )
+                );
+        
         return http.build();
     }
-
+    
     @Bean
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
-        throws Exception {
+            throws Exception {
         http
-            .authorizeHttpRequests((authorize) -> authorize
-                .anyRequest().authenticated()
-            )
-            // OAuth2 Login handles the redirect to the OAuth 2.0 Login endpoint
-            // from the authorization server filter chain
-            .oauth2Login(Customizer.withDefaults());
-
+                .authorizeHttpRequests((authorize) -> authorize
+                        .anyRequest().authenticated()
+                )
+                // OAuth2 Login handles the redirect to the OAuth 2.0 Login endpoint
+                // from the authorization server filter chain
+                .oauth2Login(Customizer.withDefaults());
+        
         return http.build();
     }
-
+    
 }

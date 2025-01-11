@@ -38,20 +38,6 @@ public class SecurityConfig {
         ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
         return http
                 .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shop/**"))
-                .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
-                .csrf((csrf) -> csrf
-                        .csrfTokenRepository(tokenRepository)
-                        .csrfTokenRequestHandler(requestHandler)
-                )
-                .build();
-    }
-    
-    @Bean
-    SecurityWebFilterChain storeapiWebFilterChain(ServerHttpSecurity http) {
-        CookieServerCsrfTokenRepository tokenRepository = CookieServerCsrfTokenRepository.withHttpOnlyFalse();
-        XorServerCsrfTokenRequestAttributeHandler delegate = new XorServerCsrfTokenRequestAttributeHandler();
-        ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
-        return http
                 .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shopapi/**"))
                 .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
                 .csrf((csrf) -> csrf
@@ -60,6 +46,7 @@ public class SecurityConfig {
                 )
                 .build();
     }
+    
     
     @Bean
     SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
