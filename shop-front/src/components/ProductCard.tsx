@@ -1,7 +1,7 @@
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {TProduct} from "@/lib/types.ts";
 
-function ProductCard({product}: {product: TProduct}) {
+function ProductCard({product}: { product: TProduct }) {
   return (
     <Card>
       <CardHeader>

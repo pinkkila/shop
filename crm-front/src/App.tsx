@@ -4,14 +4,14 @@ import LogoutBtn from "@/components/LogoutBtn.tsx";
 
 function App() {
 
-    return (
-        <>
-            <ThemeContextProvider>
-                <ThemeToggle />
-                <LogoutBtn />
-            </ThemeContextProvider>
-        </>
-    )
+  return (
+    <>
+      <ThemeContextProvider>
+        <ThemeToggle/>
+        <LogoutBtn/>
+      </ThemeContextProvider>
+    </>
+  )
 }
 
 export default App
