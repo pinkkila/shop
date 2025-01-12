@@ -2,7 +2,6 @@ package fi.pink.gateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -30,14 +29,29 @@ public class SecurityConfig {
         this.clientRegistrationRepository = clientRegistrationRepository;
     }
     
-    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @Order(1)
     @Bean
-    SecurityWebFilterChain storeWebFilterChain(ServerHttpSecurity http) {
+    SecurityWebFilterChain shopWebFilterChain(ServerHttpSecurity http) {
         CookieServerCsrfTokenRepository tokenRepository = CookieServerCsrfTokenRepository.withHttpOnlyFalse();
         XorServerCsrfTokenRequestAttributeHandler delegate = new XorServerCsrfTokenRequestAttributeHandler();
         ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
         return http
                 .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shop/**"))
+                .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
+                .csrf((csrf) -> csrf
+                        .csrfTokenRepository(tokenRepository)
+                        .csrfTokenRequestHandler(requestHandler)
+                )
+                .build();
+    }
+    
+    @Order(2)
+    @Bean
+    SecurityWebFilterChain shopapiWebFilterChain(ServerHttpSecurity http) {
+        CookieServerCsrfTokenRepository tokenRepository = CookieServerCsrfTokenRepository.withHttpOnlyFalse();
+        XorServerCsrfTokenRequestAttributeHandler delegate = new XorServerCsrfTokenRequestAttributeHandler();
+        ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
+        return http
                 .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/shopapi/**"))
                 .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
                 .csrf((csrf) -> csrf
@@ -83,18 +97,7 @@ public class SecurityConfig {
             }).then(chain.filter(exchange));
         };
     }
-
-
-//    private ServerLogoutSuccessHandler oidcLogoutSuccessHandler() {
-//        OidcClientInitiatedServerLogoutSuccessHandler oidcLogoutSuccessHandler =
-//            new OidcClientInitiatedServerLogoutSuccessHandler(this.clientRegistrationRepository);
-//
-//        // Sets the location that the End-User's User Agent will be redirected to
-//        // after the logout has been performed at the Provider
-//        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}/store");
-//
-//        return oidcLogoutSuccessHandler;
-//    }
+    
     
     private ServerLogoutSuccessHandler oidcLogoutSuccessHandler() {
         CustomLogoutSuccessHandler oidcLogoutSuccessHandler =
